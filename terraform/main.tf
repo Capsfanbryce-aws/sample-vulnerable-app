@@ -18,9 +18,10 @@ resource "aws_s3_bucket" "app_bucket" {
 }
 
 resource "aws_iam_policy" "app_policy" {
-  name        = "app-limited-access"
+  name        = "app-restricted-access"
   description = "Policy with least privilege access for instances"
 
+  # Fixed: Replaced wildcard permissions with specific required actions and resources
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -29,8 +30,8 @@ resource "aws_iam_policy" "app_policy" {
       "Effect": "Allow",
       "Action": [
         "s3:GetObject",
-        "s3:PutObject",
-        "s3:ListBucket"
+        "s3:ListBucket",
+        "s3:PutObject"
       ],
       "Resource": [
         "arn:aws:s3:::sample-app-terraform-bucket-12345",
